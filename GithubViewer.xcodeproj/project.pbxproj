@@ -132,7 +132,7 @@
 				6BD606782400321600FF4402 /* coreAPI */,
 				6BD606752400311700FF4402 /* extensions */,
 				6BD606702400300500FF4402 /* cells */,
-				6BD6066F24002FF300FF4402 /* controllers */,
+				6BD6066F24002FF300FF4402 /* controller */,
 				6B40F9D123F90A21001394FB /* AppDelegate.swift */,
 				6B40F9DB23F90A23001394FB /* Assets.xcassets */,
 				6B40F9E023F90A23001394FB /* Info.plist */,
@@ -159,13 +159,13 @@
 			path = GithubViewerUITests;
 			sourceTree = "<group>";
 		};
-		6BD6066F24002FF300FF4402 /* controllers */ = {
+		6BD6066F24002FF300FF4402 /* controller */ = {
 			isa = PBXGroup;
 			children = (
 				6B40F9D323F90A21001394FB /* SearchViewController.swift */,
 				6BD6066D24002D4500FF4402 /* ProfileViewController.swift */,
 			);
-			name = controllers;
+			name = controller;
 			path = "New Group";
 			sourceTree = "<group>";
 		};

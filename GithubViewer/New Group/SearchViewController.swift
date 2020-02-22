@@ -25,7 +25,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        txtSearch.text! = "akhena1"
+        //do nothing
     }
     
     @IBAction func actionSearch(_ sender: Any) {
