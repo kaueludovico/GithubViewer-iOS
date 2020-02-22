@@ -58,10 +58,6 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func sharedData() -> [Repository] {
-        return calledRepositories
-    }
-    
     private func formatUrl(_ url: String, textField: String, completions: String...) -> String {
         let formattedUrl = "\(url)\(completions[0])/\(textField)\(completions[1])"
         return formattedUrl
