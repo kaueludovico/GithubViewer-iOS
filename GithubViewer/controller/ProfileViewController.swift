@@ -17,24 +17,41 @@ class ProfileViewController: UIViewController {
     private let cellId = "cellId"
     var search = SearchViewController()
     var repositories: [Repository]?
-    let client = GithubSDKCore()
+    var userData = User()
+    var rest = RestManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        callUser(repositories!)
         collectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         imgProfile.roundedImage()
+        setupData()
     }
     
-    private func callUser(_ data: [Repository]) {
-        var urlUser = String()
-        for item in data {
-            urlUser = item.owner.userUrl
+    private func setupData() {
+        if let name = userData.name, let avatar = userData.avatarUrl {
+            lblName.text = name
+            imgProfile.downloaded(from: avatar)
         }
-        let dataJson = client.getCallAPI(urlUser, method: "GET", headers: ["Content-Type": "application/x-www-form-urlencoded"]) as! [String:AnyObject]
-        
-        lblName.text! = dataJson["name"] as! String
-        imgProfile.downloaded(from: dataJson["avatar_url"] as! String)
+        callRepositories(userData)
+    }
+    
+    private func callRepositories(_ userData: User) {
+        guard let url = URL(string: userData.reposUrl ?? defString) else { return }
+        var repository = [Repository]()
+        rest.makeRequest(toURL: url, withHttpMethod: .get) { (results) in
+            if let data = results.data {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                guard let reposData = try? decoder.decode(Array<Repository>.self, from: data) else { return }
+                for repos in reposData {
+                    repository.append(repos)
+                }
+                self.repositories = repository
+                DispatchQueue.main.async(execute: {
+                    self.collectionView.reloadData()
+                })
+            }
+        }
     }
 }
 

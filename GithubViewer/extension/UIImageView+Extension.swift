@@ -16,6 +16,17 @@ extension UIImageView {
         layer.cornerRadius = bounds.height / 2
     }
     
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
     func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         contentMode = mode
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -32,6 +43,8 @@ extension UIImageView {
     }
     func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
+        // Load Image
+        load(url: url)
+        // or -> downloaded(url: url)
     }
 }
