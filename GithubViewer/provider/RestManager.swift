@@ -9,16 +9,13 @@
 import Foundation
 
 class RestManager {
+    
     // MARK: - Properties
     
     var requestHttpHeaders = RestEntity()
-    
     var urlQueryParameters = RestEntity()
-    
     var httpBodyParameters = RestEntity()
-    
     var httpBody: Data?
-    
     
     // MARK: - Public Methods
     
@@ -62,7 +59,6 @@ class RestManager {
     }
     
     
-    
     // MARK: - Private Methods
     
     private func addURLQueryParameters(toURL url: URL) -> URL {
@@ -84,8 +80,6 @@ class RestManager {
         return url
     }
     
-    
-    
     private func getHttpBody() -> Data? {
         guard let contentType = requestHttpHeaders.value(forKey: "Content-Type") else { return nil }
         if contentType.contains("application/json") {
@@ -97,8 +91,6 @@ class RestManager {
             return httpBody
         }
     }
-    
-    
     
     private func prepareRequest(withURL url: URL?, httpBody: Data?, httpMethod: HttpMethod) -> URLRequest? {
         guard let url = url else { return nil }
@@ -123,8 +115,6 @@ extension RestManager {
         case delete
     }
     
-    
-    
     struct RestEntity {
         private var values: [String: String] = [:]
         
@@ -145,8 +135,6 @@ extension RestManager {
         }
     }
     
-    
-    
     struct Response {
         var response: URLResponse?
         var httpStatusCode: Int = 0
@@ -165,8 +153,6 @@ extension RestManager {
         }
     }
     
-    
-    
     struct Results {
         var data: Data?
         var response: Response?
@@ -182,8 +168,6 @@ extension RestManager {
             self.error = error
         }
     }
-    
-    
     
     enum CustomError: Error {
         case failedToCreateRequest
